@@ -1,0 +1,64 @@
+$schema: https://learning-contents.org/schemas/parsons-puzzles/0.1.0
+license: MIT
+locale: en-US
+id: pp_bank_account
+source: main.sql
+title: Bank Transaction Logic
+description: Arrange the SQL queries to correctly handle account transactions.
+authors:
+  - first: Jone
+    last: Doe
+    email: jone.doe@example.com
+    affiliation: University of John Doe
+pedagogy:
+  activity: parsons-puzzles
+  difficulty: novice
+  prereq_topics: [sql, dml]
+  topics: [sql, dml, updates]
+runtime:
+  language: sql
+statement: |
+  Rearrange the queries to correctly implement the deposit and withdrawal transactions for the `accounts` table. Make sure to:
+  1. Deposit funds before withdrawing
+  2. Validate account balances in the withdrawal query
+executions:
+  - title: Standard Transaction
+    stdout: |-
+      id  owner  balance
+      --  -----  -------
+      1   Bob    250    
+      2   Alice  500
+    console: |-
+      id  owner  balance
+      --  -----  -------
+      1   Bob    250    
+      2   Alice  500
+elements:
+  - type: block
+    location:
+      snippet: |2-
+        UPDATE accounts SET balance = balance + 100 WHERE id = 1;
+    choices:
+      - snippet: |-
+          UPDATE accounts SET balance = balance + 100 WHERE id = 1;
+        role: solution
+        explanations:
+          - body: |
+              Correctly adds 100 to Bob's balance (`id = 1`).
+  - type: block
+    location:
+      snippet: |2-
+        UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;
+    choices:
+      - snippet: |-
+          UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;
+        role: solution
+        explanations:
+          - body: |
+              Correctly subtracts 50 only if funds are sufficient (`balance >= 50`).
+      - snippet: |-
+          UPDATE accounts SET balance = balance - 50 WHERE id = 1;
+        role: distractor
+        explanations:
+          - body: |
+              This query is dangerous because it lacks the `AND balance >= 50` condition, potentially allowing an account balance to drop below zero!

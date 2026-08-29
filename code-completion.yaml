@@ -1,0 +1,73 @@
+$schema: https://learning-contents.org/schemas/code-completion/0.1.0
+source: main.sql
+license: MIT
+locale: en-US
+id: cc_bank_account
+title: Complete the BankAccount Logic
+description: Fill in the critical SQL update logic for account balance updates and validation.
+authors:
+  - first: Jone
+    last: Doe
+    email: jone.doe@example.com
+    affiliation: University of John Doe
+pedagogy:
+  activity: code-completion
+  difficulty: novice
+  prereq_topics: []
+  topics:
+    - sql
+    - dml
+runtime:
+  language: sql
+statement: |
+  Complete the `accounts` transaction queries by adding the missing updates and validation checks. Focus on:
+  - Updating `balance` during a deposit transaction
+  - Ensuring withdrawal amounts do not exceed the current balance
+executions:
+  - title: Bob's Account
+    stdin: []
+    stdout: |-
+      id  owner  balance
+      --  -----  -------
+      1   Bob    250    
+      2   Alice  500
+    console: |-
+      id  owner  balance
+      --  -----  -------
+      1   Bob    250    
+      2   Alice  500
+    stderr: ""
+    status: pass
+elements:
+  - type: blank
+    location:
+      context: "UPDATE accounts SET balance = balance + 100 WHERE id = 1;"
+      snippet: "+"
+      nth: 1
+    choices:
+      - snippet: "+"
+        role: solution
+        explanations:
+          - body: |
+              Use the `+` operator to **increase** the current balance by the deposit amount.
+      - snippet: "-"
+        role: distractor
+        explanations:
+          - body: |
+              This would use the `-` operator, which **decreases** the balance instead of adding to it.
+  - type: blank
+    location:
+      context: "UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;"
+      snippet: ">="
+      nth: 1
+    choices:
+      - snippet: ">="
+        role: solution
+        explanations:
+          - body: |
+              You must check if `balance >= 50`, ensuring the account has **sufficient funds** before debiting.
+      - snippet: "<"
+        role: distractor
+        explanations:
+          - body: |
+              This would check `balance < 50`, allowing withdrawals only when the user has insufficient funds!

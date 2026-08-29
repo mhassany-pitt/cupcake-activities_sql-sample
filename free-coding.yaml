@@ -1,0 +1,75 @@
+$schema: https://learning-contents.org/schemas/free-coding/0.1.0
+source: main.sql
+license: MIT
+locale: en-US
+id: free_coding_bank_account
+title: Bank Account Management
+description: Write and execute SQL queries to manage account transactions.
+authors:
+  - first: Jone
+    last: Doe
+    email: jone.doe@example.com
+    affiliation: University of John Doe
+pedagogy:
+  activity: free-coding
+  difficulty: novice
+  prereq_topics: [sql]
+  topics: [sql, dml, updates]
+runtime:
+  language: sql
+statement: |
+  Write SQL statements to deposit 100 into Bob's account (`id = 1`) and withdraw 50, ensuring Bob has sufficient funds.
+  Finally, query all accounts ordered by `id ASC`.
+executions:
+  - title: Transfer Alice to Bob
+    stdin: []
+    stdout: |-
+      id  owner  balance
+      --  -----  -------
+      1   Bob    250    
+      2   Alice  500
+    console: |-
+      id  owner  balance
+      --  -----  -------
+      1   Bob    250    
+      2   Alice  500
+    status: pass
+elements:
+  - type: locked
+    location:
+      snippet: |-
+        CREATE TABLE accounts (
+            id INTEGER PRIMARY KEY,
+            owner TEXT NOT NULL,
+            balance INTEGER NOT NULL
+        );
+
+        INSERT INTO accounts (id, owner, balance) VALUES
+            (1, 'Bob', 200),
+            (2, 'Alice', 500);
+  - type: editable
+    location:
+      snippet: |-
+        UPDATE accounts SET balance = balance + 100 WHERE id = 1;
+
+        -- Withdraw 50 from Bob's account if balance is sufficient
+        UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;
+
+        -- Query final account balances
+        SELECT id, owner, balance FROM accounts ORDER BY id ASC;
+    placeholder: |-
+      -- Write transaction and query statements here
+testcases:
+  - title: Simple Transfer
+    visible: true
+    stdin: []
+    stdout: |-
+      id  owner  balance
+      --  -----  -------
+      1   Bob    250    
+      2   Alice  500
+    console: |-
+      id  owner  balance
+      --  -----  -------
+      1   Bob    250    
+      2   Alice  500

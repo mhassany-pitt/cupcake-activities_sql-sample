@@ -1,0 +1,33 @@
+$schema: https://learning-contents.org/schemas/parameterized-code-tracing/0.1.0
+license: MIT
+locale: en-US
+id: parameterized_code_tracing_id
+source: main.sql
+title: Deposit/Withdraw from Bank Account
+description: This program simulates a relational bank account in SQL.
+authors:
+  - first: First
+    last: Last
+    email: author@example.com
+    affiliation: University
+pedagogy:
+  activity: parameterized-code-tracing
+  difficulty: novice
+  prereq_topics: [sql]
+  topics: [sql, dml]
+runtime:
+  language: sql
+statement: |
+  Determine the exact tabular **output** of the SQL execution.
+  The script initializes the `accounts` table with a starting balance and executes a sequence of `UPDATE` and `SELECT` statements.
+elements:
+  - type: parameter
+    location:
+      context: "(1, 'Bob', 200),"
+      snippet: "200"
+    values: [100, 200, 300]
+  - type: parameter
+    location:
+      context: "UPDATE accounts SET balance = balance + 100 WHERE id = 1;"
+      snippet: "100"
+    values: [100, 200, 300]

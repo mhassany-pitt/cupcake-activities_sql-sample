@@ -1,0 +1,63 @@
+$schema: https://learning-contents.org/schemas/multiple-choice-question/0.1.0
+license: MIT
+locale: en-US
+id: mcq_bank_account_deposit
+title: SQL Safe Withdrawal Query
+description: Choose the correct SQL UPDATE statement for safe fund withdrawals.
+authors:
+  - first: Jone
+    last: Doe
+    email: jone.doe@example.com
+    affiliation: University of John Doe
+pedagogy:
+  activity: multiple-choice-question
+  difficulty: intermediate
+  prereq_topics:
+    - sql
+    - dml
+  topics:
+    - sql
+    - updates
+    - integrity
+include_choices: 3
+question: |
+  Given the relational table `accounts(id, owner, balance)`:
+  
+  Which of the following SQL statements correctly withdraws `50` from Bob's account (`id = 1`) **only if** Bob has a balance of at least `50`?
+choices:
+  - body: |
+      ```sql
+      UPDATE accounts
+      SET balance = balance - 50
+      WHERE id = 1 AND balance >= 50;
+      ```
+    role: solution
+    include: always
+    order: 1
+    explanations:
+      - body: |
+          This is the correct SQL statement. The compound `WHERE` clause ensures that the update is only applied to row `id = 1` when `balance >= 50`, preventing negative account balances.
+  - body: |
+      ```sql
+      UPDATE accounts
+      SET balance = balance - 50
+      WHERE id = 1 OR balance >= 50;
+      ```
+    role: distractor
+    explanations:
+      - body: |
+          Incorrect. Using `OR` instead of `AND` causes the update to debit **every single account** in the table that has a balance >= 50, not just Bob's!
+  - body: |
+      ```sql
+      UPDATE accounts
+      SET balance = 50
+      WHERE id = 1 AND balance >= 50;
+      ```
+    role: distractor
+    explanations:
+      - body: |
+          Incorrect. Setting `balance = 50` hardcodes the new balance to 50 rather than subtracting 50 from the existing balance (`balance = balance - 50`).
+  - body: None
+    role: distractor
+    include: always
+    order: 2
