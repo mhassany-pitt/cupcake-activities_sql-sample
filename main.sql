@@ -1,12 +1,4 @@
-CREATE TABLE accounts (
-    id INTEGER PRIMARY KEY,
-    owner TEXT NOT NULL,
-    balance INTEGER NOT NULL
-);
-
-INSERT INTO accounts (id, owner, balance) VALUES
-    (1, 'Bob', 200),
-    (2, 'Alice', 500);
+-- database: seed.sql
 
 -- Deposit 100 into Bob's account
 UPDATE accounts SET balance = balance + 100 WHERE id = 1;

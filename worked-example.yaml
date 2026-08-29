@@ -1,5 +1,7 @@
 $schema: https://learning-contents.org/schemas/worked-example/0.1.0
 source: main.sql
+includes:
+  - seed.sql
 license: MIT
 locale: en-US
 id: we_bank_account
@@ -22,41 +24,27 @@ runtime:
   language: sql
 statement: |
   This worked example demonstrates how `accounts` relational table state is managed using Standard SQL. We'll examine:
-  1. Table schema creation (`CREATE TABLE`)
-  2. Data insertion (`INSERT INTO`)
-  3. Deposit and withdrawal transaction updates (`UPDATE ... SET`)
-  4. Querying results (`SELECT`)
+  1. Deposit and withdrawal transaction updates (`UPDATE ... SET`)
+  2. Querying results (`SELECT`)
 executions:
   - title: Bob's Account
     stdin: []
     stdout: |-
-      id  owner  balance
-      --  -----  -------
-      1   Bob    250    
-      2   Alice  500
+      id[int;pk],owner[text],balance[numeric]
+      1,Bob,250
+      2,Alice,500
     console: |-
-      id  owner  balance
-      --  -----  -------
-      1   Bob    250    
-      2   Alice  500
+      id[int;pk],owner[text],balance[numeric]
+      1,Bob,250
+      2,Alice,500
     status: pass
 elements:
   - type: explanation
     location:
-      snippet: "CREATE TABLE accounts ("
+      snippet: "UPDATE accounts SET balance = balance + 100 WHERE id = 1;"
     explanations:
       - body: |
-          The `CREATE TABLE` statement defines the relational structure:
-          ```sql
-          CREATE TABLE accounts (
-              id INTEGER PRIMARY KEY,
-              owner TEXT NOT NULL,
-              balance INTEGER NOT NULL
-          );
-          ```
-          Every record has a primary key `id`, an `owner` string, and an integer `balance`.
-      - body: |
-          ...
+          This `UPDATE` statement credits Bob's account (id = 1) by adding 100 to the current balance.
   - type: explanation
     location:
       snippet: "UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;"

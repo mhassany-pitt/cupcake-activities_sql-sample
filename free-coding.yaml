@@ -1,5 +1,7 @@
 $schema: https://learning-contents.org/schemas/free-coding/0.1.0
 source: main.sql
+includes:
+  - seed.sql
 license: MIT
 locale: en-US
 id: free_coding_bank_account
@@ -24,29 +26,15 @@ executions:
   - title: Transfer Alice to Bob
     stdin: []
     stdout: |-
-      id  owner  balance
-      --  -----  -------
-      1   Bob    250    
-      2   Alice  500
+      id[int;pk],owner[text],balance[numeric]
+      1,Bob,250
+      2,Alice,500
     console: |-
-      id  owner  balance
-      --  -----  -------
-      1   Bob    250    
-      2   Alice  500
+      id[int;pk],owner[text],balance[numeric]
+      1,Bob,250
+      2,Alice,500
     status: pass
 elements:
-  - type: locked
-    location:
-      snippet: |-
-        CREATE TABLE accounts (
-            id INTEGER PRIMARY KEY,
-            owner TEXT NOT NULL,
-            balance INTEGER NOT NULL
-        );
-
-        INSERT INTO accounts (id, owner, balance) VALUES
-            (1, 'Bob', 200),
-            (2, 'Alice', 500);
   - type: editable
     location:
       snippet: |-
@@ -58,18 +46,11 @@ elements:
         -- Query final account balances
         SELECT id, owner, balance FROM accounts ORDER BY id ASC;
     placeholder: |-
-      -- Write transaction and query statements here
-testcases:
-  - title: Simple Transfer
-    visible: true
-    stdin: []
-    stdout: |-
-      id  owner  balance
-      --  -----  -------
-      1   Bob    250    
-      2   Alice  500
-    console: |-
-      id  owner  balance
-      --  -----  -------
-      1   Bob    250    
-      2   Alice  500
+      -- Deposit 100 into Bob's account (id = 1)
+      -- TODO: Write UPDATE statement here
+
+      -- Withdraw 50 from Bob's account if balance >= 50
+      -- TODO: Write UPDATE statement here
+
+      -- Query final account balances
+      -- TODO: Write SELECT statement here

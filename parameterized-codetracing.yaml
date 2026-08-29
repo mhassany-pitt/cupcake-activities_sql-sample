@@ -1,8 +1,10 @@
 $schema: https://learning-contents.org/schemas/parameterized-code-tracing/0.1.0
+source: main.sql
+includes:
+  - seed.sql
 license: MIT
 locale: en-US
 id: parameterized_code_tracing_id
-source: main.sql
 title: Deposit/Withdraw from Bank Account
 description: This program simulates a relational bank account in SQL.
 authors:
@@ -23,11 +25,12 @@ statement: |
 elements:
   - type: parameter
     location:
-      context: "(1, 'Bob', 200),"
-      snippet: "200"
-    values: [100, 200, 300]
-  - type: parameter
-    location:
       context: "UPDATE accounts SET balance = balance + 100 WHERE id = 1;"
       snippet: "100"
-    values: [100, 200, 300]
+    values: [50, 100, 200]
+  - type: parameter
+    location:
+      context: "UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;"
+      snippet: "50"
+      nth: 1
+    values: [25, 50, 75]

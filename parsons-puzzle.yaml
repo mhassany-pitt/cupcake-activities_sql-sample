@@ -1,8 +1,10 @@
 $schema: https://learning-contents.org/schemas/parsons-puzzles/0.1.0
+source: main.sql
+includes:
+  - seed.sql
 license: MIT
 locale: en-US
 id: pp_bank_account
-source: main.sql
 title: Bank Transaction Logic
 description: Arrange the SQL queries to correctly handle account transactions.
 authors:
@@ -24,15 +26,13 @@ statement: |
 executions:
   - title: Standard Transaction
     stdout: |-
-      id  owner  balance
-      --  -----  -------
-      1   Bob    250    
-      2   Alice  500
+      id[int;pk],owner[text],balance[numeric]
+      1,Bob,250
+      2,Alice,500
     console: |-
-      id  owner  balance
-      --  -----  -------
-      1   Bob    250    
-      2   Alice  500
+      id[int;pk],owner[text],balance[numeric]
+      1,Bob,250
+      2,Alice,500
 elements:
   - type: block
     location:

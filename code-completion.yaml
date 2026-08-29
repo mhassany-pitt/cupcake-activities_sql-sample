@@ -1,5 +1,7 @@
 $schema: https://learning-contents.org/schemas/code-completion/0.1.0
 source: main.sql
+includes:
+  - seed.sql
 license: MIT
 locale: en-US
 id: cc_bank_account
@@ -27,15 +29,13 @@ executions:
   - title: Bob's Account
     stdin: []
     stdout: |-
-      id  owner  balance
-      --  -----  -------
-      1   Bob    250    
-      2   Alice  500
+      id[int;pk],owner[text],balance[numeric]
+      1,Bob,250
+      2,Alice,500
     console: |-
-      id  owner  balance
-      --  -----  -------
-      1   Bob    250    
-      2   Alice  500
+      id[int;pk],owner[text],balance[numeric]
+      1,Bob,250
+      2,Alice,500
     stderr: ""
     status: pass
 elements:
@@ -58,16 +58,32 @@ elements:
   - type: blank
     location:
       context: "UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;"
-      snippet: ">="
+      snippet: "-"
       nth: 1
     choices:
-      - snippet: ">="
+      - snippet: "-"
         role: solution
         explanations:
           - body: |
-              You must check if `balance >= 50`, ensuring the account has **sufficient funds** before debiting.
-      - snippet: "<"
+              Use the `-` operator to **decrease** the balance during a withdrawal.
+      - snippet: "+"
         role: distractor
         explanations:
           - body: |
-              This would check `balance < 50`, allowing withdrawals only when the user has insufficient funds!
+              Using `+` would accidentally deposit funds instead of withdrawing.
+  - type: blank
+    location:
+      context: "UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;"
+      snippet: ">= 50"
+      nth: 1
+    choices:
+      - snippet: ">= 50"
+        role: solution
+        explanations:
+          - body: |
+              Ensures the withdrawal only proceeds if there is at least 50 in the account.
+      - snippet: "> 0"
+        role: distractor
+        explanations:
+          - body: |
+              Checking `> 0` is insufficient because an account with only 10 would be debited into a negative balance of -40.
