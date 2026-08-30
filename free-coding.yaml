@@ -56,10 +56,8 @@ elements:
         SELECT id, owner, balance FROM accounts ORDER BY id ASC;
     placeholder: |-
       -- 1. Deposit 100 into Bob's account (id = 1)
-
-        -- 2. Withdraw 50 from Bob's account if balance >= 50
-
-        -- 3. Query id, owner, balance from accounts ordered by id ASC
+      -- 2. Withdraw 50 from Bob's account if balance >= 50
+      -- 3. Query id, owner, balance from accounts ordered by id ASC
 testcases:
   - title: Standard Account Workflow
     visible: true
