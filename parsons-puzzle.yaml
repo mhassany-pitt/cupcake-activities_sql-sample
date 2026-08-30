@@ -74,11 +74,6 @@ elements:
         explanations:
           - body: |
               Incorrect. Lacking the `AND balance >= 50` condition allows withdrawals even when funds are insufficient, causing negative balances.
-      - snippet: UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance < 50;
-        role: distractor
-        explanations:
-          - body: |
-              Incorrect. Checking `balance < 50` inverts the logic: it only debits the account when funds are already insufficient!
   - type: block
     group: sql-queries
     location:
@@ -89,8 +84,3 @@ elements:
         explanations:
           - body: |
               Correct! Selects `id`, `owner`, and `balance` ordered deterministically by primary key `id ASC`.
-      - snippet: SELECT id, owner, balance FROM accounts ORDER BY id DESC;
-        role: distractor
-        explanations:
-          - body: |
-              Incorrect. Sorting in descending order (`DESC`) outputs the records in reverse order (Alice first, then Bob).
