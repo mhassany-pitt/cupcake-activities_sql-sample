@@ -2,8 +2,8 @@ $schema: https://learning-contents.org/schemas/multiple-choice-question/0.1.0
 license: MIT
 locale: en-US
 id: mcq_bank_account_deposit
-title: SQL Safe Withdrawal Query
-description: Choose the correct SQL UPDATE statement for safe fund withdrawals.
+title: SQL Safe Withdrawal Query Implementation
+description: Choose the correct SQL UPDATE statement for safe fund withdrawals with balance validation.
 authors:
   - first: Jone
     last: Doe
@@ -13,18 +13,21 @@ pedagogy:
   activity: multiple-choice-question
   difficulty: intermediate
   prereq_topics:
-    - sql
+    - relational-databases
+    - sql-basics
     - dml
   topics:
     - sql
+    - dml
     - updates
+    - filtering
     - integrity
-source: seed.sql
+source: main.sql
 includes:
   - seed.sql
 runtime:
   language: sql
-include_choices: 3
+include_choices: 4
 question: |
   Given the relational table `accounts(id, owner, balance)`:
   
@@ -41,7 +44,7 @@ choices:
     order: 1
     explanations:
       - body: |
-          This is the correct SQL statement. The compound `WHERE` clause ensures that the update is only applied to row `id = 1` when `balance >= 50`, preventing negative account balances.
+          Correct! The compound predicate `WHERE id = 1 AND balance >= 50` restricts the modification to Bob's row and only executes the debit if `balance >= 50`, preventing overdrafts.
   - body: |
       ```sql
       UPDATE accounts
@@ -51,7 +54,7 @@ choices:
     role: distractor
     explanations:
       - body: |
-          Incorrect. Using `OR` instead of `AND` causes the update to debit **every single account** in the table that has a balance >= 50, not just Bob's!
+          Incorrect. Using logical `OR` instead of `AND` matches row 1 OR any other account with `balance >= 50`. This would inadvertently debit 50 from **all accounts** in the system that have sufficient funds!
   - body: |
       ```sql
       UPDATE accounts
@@ -61,8 +64,14 @@ choices:
     role: distractor
     explanations:
       - body: |
-          Incorrect. Setting `balance = 50` hardcodes the new balance to 50 rather than subtracting 50 from the existing balance (`balance = balance - 50`).
-  - body: None
+          Incorrect. Assigning `SET balance = 50` hardcodes the account balance to 50 rather than deducting 50 from the current balance (`SET balance = balance - 50`).
+  - body: |
+      ```sql
+      UPDATE accounts
+      SET balance = balance - 50
+      WHERE id = 1 AND balance <= 50;
+      ```
     role: distractor
-    include: always
-    order: 2
+    explanations:
+      - body: |
+          Incorrect. The condition `balance <= 50` inverts the logic: it only debits the account when funds are 50 or less, allowing users with low funds (e.g. 10) to be debited into a negative balance of -40 while blocking users with ample funds!

@@ -5,8 +5,8 @@ includes:
 license: MIT
 locale: en-US
 id: cc_bank_account
-title: Complete the BankAccount Logic
-description: Fill in the critical SQL update logic for account balance updates and validation.
+title: Complete the BankAccount SQL Implementation
+description: Fill in essential SQL keywords, operators, and relational predicates to update and query bank account tables.
 authors:
   - first: Jone
     last: Doe
@@ -15,16 +15,24 @@ authors:
 pedagogy:
   activity: code-completion
   difficulty: novice
-  prereq_topics: []
+  prereq_topics:
+    - relational-databases
+    - sql-basics
   topics:
     - sql
     - dml
+    - updates
+    - filtering
+    - queries
 runtime:
   language: sql
 statement: |
-  Complete the `accounts` transaction queries by adding the missing updates and validation checks. Focus on:
-  - Updating `balance` during a deposit transaction
-  - Ensuring withdrawal amounts do not exceed the current balance
+  Complete the `accounts` SQL transaction queries by selecting the correct keywords, arithmetic operators, and relational predicates.
+  Make sure to:
+  1. Use the `UPDATE` statement to modify existing table rows.
+  2. Increase the balance during a deposit transaction.
+  3. Ensure that withdrawal amounts do not exceed the available balance.
+  4. Query the final table results using `SELECT`.
 executions:
   - title: Bob's Account
     stdin: []
@@ -42,6 +50,32 @@ elements:
   - type: blank
     location:
       context: "UPDATE accounts SET balance = balance + 100 WHERE id = 1;"
+      snippet: "UPDATE"
+      nth: 1
+    choices:
+      - snippet: "UPDATE"
+        role: solution
+        explanations:
+          - body: |
+              Correct! In SQL, the `UPDATE` statement is used to modify existing row values in a relational table.
+      - snippet: "INSERT"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. `INSERT` is used to add new rows to a table, not to update existing balances.
+      - snippet: "ALTER"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. `ALTER` is a DDL command used to modify table schemas (e.g. adding columns), not row values.
+      - snippet: "SELECT"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. `SELECT` is used to query data, not to mutate column values.
+  - type: blank
+    location:
+      context: "UPDATE accounts SET balance = balance + 100 WHERE id = 1;"
       snippet: "+"
       nth: 1
     choices:
@@ -49,41 +83,71 @@ elements:
         role: solution
         explanations:
           - body: |
-              Use the `+` operator to **increase** the current balance by the deposit amount.
+              Correct! The `+` operator increases the current balance by the deposit amount.
       - snippet: "-"
         role: distractor
         explanations:
           - body: |
-              This would use the `-` operator, which **decreases** the balance instead of adding to it.
-  - type: blank
-    location:
-      context: "UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;"
-      snippet: "-"
-      nth: 1
-    choices:
-      - snippet: "-"
-        role: solution
-        explanations:
-          - body: |
-              Use the `-` operator to **decrease** the balance during a withdrawal.
-      - snippet: "+"
+              Incorrect. The `-` operator would subtract funds from the account instead of depositing them.
+      - snippet: "*"
         role: distractor
         explanations:
           - body: |
-              Using `+` would accidentally deposit funds instead of withdrawing.
-  - type: blank
-    location:
-      context: "UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;"
-      snippet: ">= 50"
-      nth: 1
-    choices:
-      - snippet: ">= 50"
-        role: solution
-        explanations:
-          - body: |
-              Ensures the withdrawal only proceeds if there is at least 50 in the account.
-      - snippet: "> 0"
+              Incorrect. The `*` operator would multiply the current balance by 100 instead of adding funds.
+      - snippet: "/"
         role: distractor
         explanations:
           - body: |
-              Checking `> 0` is insufficient because an account with only 10 would be debited into a negative balance of -40.
+              Incorrect. The `/` operator would divide the balance instead of crediting it.
+  - type: blank
+    location:
+      context: "UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;"
+      snippet: ">="
+      nth: 1
+    choices:
+      - snippet: ">="
+        role: solution
+        explanations:
+          - body: |
+              Correct! The greater-than-or-equal operator (`>=`) ensures the withdrawal only occurs if the account has at least 50 in funds.
+      - snippet: "<="
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. Using `<=` would permit withdrawals only when the balance is 50 or less, risking an overdraft if balance is under 50.
+      - snippet: "="
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. Using `=` would only allow withdrawals if the balance is exactly equal to 50, rejecting withdrawals when balance is greater than 50.
+      - snippet: "<"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. Using `<` would permit withdrawals only when funds are strictly less than 50, guaranteeing an overdraft into negative balance!
+  - type: blank
+    location:
+      context: "SELECT id, owner, balance FROM accounts ORDER BY id ASC;"
+      snippet: "SELECT"
+      nth: 1
+    choices:
+      - snippet: "SELECT"
+        role: solution
+        explanations:
+          - body: |
+              Correct! The `SELECT` command queries and returns the specified column values from the `accounts` table.
+      - snippet: "FETCH"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. In standard SQL queries, queries start with `SELECT`, not `FETCH`.
+      - snippet: "GET"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. `GET` is not a standard SQL DML keyword for querying table rows.
+      - snippet: "SHOW"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. `SHOW` is used in some database engines for inspecting schema metadata, not for tabular data projection.

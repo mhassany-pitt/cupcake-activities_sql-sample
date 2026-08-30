@@ -5,8 +5,8 @@ includes:
 license: MIT
 locale: en-US
 id: free_coding_bank_account
-title: Bank Account Management
-description: Write and execute SQL queries to manage account transactions.
+title: Bank Account Management in SQL
+description: Write and execute SQL DML and query statements to deposit funds, safely withdraw funds, and retrieve ordered balances.
 authors:
   - first: Jone
     last: Doe
@@ -15,15 +15,24 @@ authors:
 pedagogy:
   activity: free-coding
   difficulty: novice
-  prereq_topics: [sql]
-  topics: [sql, dml, updates]
+  prereq_topics:
+    - relational-databases
+    - sql-basics
+  topics:
+    - sql
+    - dml
+    - updates
+    - filtering
+    - queries
 runtime:
   language: sql
 statement: |
-  Write SQL statements to deposit 100 into Bob's account (`id = 1`) and withdraw 50, ensuring Bob has sufficient funds.
-  Finally, query all accounts ordered by `id ASC`.
+  Write SQL statements to perform transactions on the seeded `accounts` table:
+  1. Deposit `100` into Bob's account (`id = 1`).
+  2. Withdraw `50` from Bob's account (`id = 1`) only if his balance is at least `50` (`balance >= 50`).
+  3. Query all columns `id`, `owner`, and `balance` from `accounts` ordered by `id ASC`.
 executions:
-  - title: Transfer Alice to Bob
+  - title: Standard Transaction Sequence
     stdin: []
     stdout: |-
       id[int;pk],owner[text],balance[numeric]
@@ -46,11 +55,21 @@ elements:
         -- Query final account balances
         SELECT id, owner, balance FROM accounts ORDER BY id ASC;
     placeholder: |-
-      -- Deposit 100 into Bob's account (id = 1)
-      -- TODO: Write UPDATE statement here
+      -- 1. Deposit 100 into Bob's account (id = 1)
 
-      -- Withdraw 50 from Bob's account if balance >= 50
-      -- TODO: Write UPDATE statement here
+        -- 2. Withdraw 50 from Bob's account if balance >= 50
 
-      -- Query final account balances
-      -- TODO: Write SELECT statement here
+        -- 3. Query id, owner, balance from accounts ordered by id ASC
+testcases:
+  - title: Standard Account Workflow
+    visible: true
+    stdin: []
+    stdout: |-
+      id[int;pk],owner[text],balance[numeric]
+      1,Bob,250
+      2,Alice,500
+    console: |-
+      id[int;pk],owner[text],balance[numeric]
+      1,Bob,250
+      2,Alice,500
+    status: pass

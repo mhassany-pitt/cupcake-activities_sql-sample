@@ -5,8 +5,8 @@ includes:
 license: MIT
 locale: en-US
 id: pp_bank_account
-title: Bank Transaction Logic
-description: Arrange the SQL queries to correctly handle account transactions.
+title: Bank Account Transaction Queries in SQL
+description: Arrange the SQL queries to deposit funds, safely debit an account with balance validation, and project the ordered final balances.
 authors:
   - first: Jone
     last: Doe
@@ -15,14 +15,23 @@ authors:
 pedagogy:
   activity: parsons-puzzles
   difficulty: novice
-  prereq_topics: [sql, dml]
-  topics: [sql, dml, updates]
+  prereq_topics:
+    - relational-databases
+    - sql-basics
+  topics:
+    - sql
+    - dml
+    - updates
+    - filtering
+    - queries
 runtime:
   language: sql
 statement: |
-  Rearrange the queries to correctly implement the deposit and withdrawal transactions for the `accounts` table. Make sure to:
-  1. Deposit funds before withdrawing
-  2. Validate account balances in the withdrawal query
+  Rearrange the queries to correctly implement the deposit, safe withdrawal, and final balance query for the `accounts` table.
+  Make sure to:
+  1. Deposit funds into Bob's account (`id = 1`).
+  2. Safely withdraw funds by enforcing `balance >= 50` in the `WHERE` predicate.
+  3. Query the final table rows sorted by `id ASC`.
 executions:
   - title: Standard Transaction
     stdout: |-
@@ -33,10 +42,12 @@ executions:
       id[int;pk],owner[text],balance[numeric]
       1,Bob,250
       2,Alice,500
+    status: pass
 elements:
   - type: block
+    group: sql-queries
     location:
-      snippet: |2-
+      snippet: |-
         UPDATE accounts SET balance = balance + 100 WHERE id = 1;
     choices:
       - snippet: |-
@@ -44,10 +55,17 @@ elements:
         role: solution
         explanations:
           - body: |
-              Correctly adds 100 to Bob's balance (`id = 1`).
+              Correct! Credits Bob's account (`id = 1`) by adding 100 to the current balance.
+      - snippet: |-
+          UPDATE accounts SET balance = balance + 100;
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. Omitting `WHERE id = 1` updates every single account in the database!
   - type: block
+    group: sql-queries
     location:
-      snippet: |2-
+      snippet: |-
         UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;
     choices:
       - snippet: |-
@@ -55,10 +73,34 @@ elements:
         role: solution
         explanations:
           - body: |
-              Correctly subtracts 50 only if funds are sufficient (`balance >= 50`).
+              Correct! Debits 50 only if Bob's account has sufficient funds (`balance >= 50`).
       - snippet: |-
           UPDATE accounts SET balance = balance - 50 WHERE id = 1;
         role: distractor
         explanations:
           - body: |
-              This query is dangerous because it lacks the `AND balance >= 50` condition, potentially allowing an account balance to drop below zero!
+              Incorrect. Lacking the `AND balance >= 50` condition allows withdrawals even when funds are insufficient, causing negative balances.
+      - snippet: |-
+          UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance < 50;
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. Checking `balance < 50` inverts the logic: it only debits the account when funds are already insufficient!
+  - type: block
+    group: sql-queries
+    location:
+      snippet: |-
+        SELECT id, owner, balance FROM accounts ORDER BY id ASC;
+    choices:
+      - snippet: |-
+          SELECT id, owner, balance FROM accounts ORDER BY id ASC;
+        role: solution
+        explanations:
+          - body: |
+              Correct! Selects `id`, `owner`, and `balance` ordered deterministically by primary key `id ASC`.
+      - snippet: |-
+          SELECT id, owner, balance FROM accounts ORDER BY id DESC;
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. Sorting in descending order (`DESC`) outputs the records in reverse order (Alice first, then Bob).

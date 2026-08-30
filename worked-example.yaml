@@ -5,8 +5,8 @@ includes:
 license: MIT
 locale: en-US
 id: we_bank_account
-title: Bank Account Management
-description: Learn how to manage relational bank account tables, updates, and queries using Standard SQL.
+title: Bank Account Management in SQL
+description: Learn how to manage relational bank account tables, safe balance mutations with conditional WHERE clauses, and queries using Standard SQL.
 authors:
   - first: Jone
     last: Doe
@@ -15,17 +15,22 @@ authors:
 pedagogy:
   activity: worked-example
   difficulty: novice
-  prereq_topics: []
+  prereq_topics:
+    - relational-databases
+    - sql-basics
   topics:
-    - databases
     - sql
     - dml
+    - updates
+    - filtering
+    - queries
 runtime:
   language: sql
 statement: |
   This worked example demonstrates how `accounts` relational table state is managed using Standard SQL. We'll examine:
-  1. Deposit and withdrawal transaction updates (`UPDATE ... SET`)
-  2. Querying results (`SELECT`)
+  1. Crediting funds using `UPDATE accounts SET balance = balance + ... WHERE id = ...`.
+  2. Safe debiting with overdraft protection using compound `WHERE ... AND balance >= ...` conditions.
+  3. Querying and ordering the resulting account rows with `SELECT ... ORDER BY id ASC`.
 executions:
   - title: Bob's Account
     stdin: []
@@ -44,10 +49,26 @@ elements:
       snippet: "UPDATE accounts SET balance = balance + 100 WHERE id = 1;"
     explanations:
       - body: |
-          This `UPDATE` statement credits Bob's account (id = 1) by adding 100 to the current balance.
+          ### 1. The Deposit `UPDATE` Query
+          * `UPDATE accounts`: Specifies the target table to modify.
+          * `SET balance = balance + 100`: Increments the existing `balance` column value by `100`.
+          * `WHERE id = 1`: Essential row filter ensuring only Bob's account (primary key `id = 1`) is updated. Omitting `WHERE` would update every row in the table!
   - type: explanation
     location:
       snippet: "UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;"
     explanations:
       - body: |
-          This `UPDATE` query performs a safe withdrawal: the `WHERE` clause requires both `id = 1` and `balance >= 50` so that an account with insufficient funds is never debited into a negative balance.
+          ### 2. Safe Withdrawal with Compound Predicates
+          * `SET balance = balance - 50`: Deducts 50 from the current balance.
+          * `WHERE id = 1 AND balance >= 50`: Uses a compound `WHERE` clause with logical `AND`:
+            1. `id = 1`: Targets Bob's account row.
+            2. `balance >= 50`: Guarantees sufficient funds exist before executing the debit. If `balance < 50`, zero rows match the `WHERE` predicate, leaving the account balance unmodified and preventing overdrafts.
+  - type: explanation
+    location:
+      snippet: "SELECT id, owner, balance FROM accounts ORDER BY id ASC;"
+    explanations:
+      - body: |
+          ### 3. Querying Results
+          * `SELECT id, owner, balance`: Explicitly projects the columns to return in the tabular result set.
+          * `FROM accounts`: Sources data from the `accounts` table.
+          * `ORDER BY id ASC`: Sorts the output rows deterministically in ascending order by primary key `id`.

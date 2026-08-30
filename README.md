@@ -20,6 +20,7 @@ One shared `main.sql` plus YAML definitions for each supported activity type (Le
 ## Layout
 
 ```
+seed.sql
 main.sql
 worked-example.yaml
 code-completion.yaml
