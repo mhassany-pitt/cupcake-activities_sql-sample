@@ -30,7 +30,7 @@ runtime:
 include_choices: 4
 question: |
   Given the relational table `accounts(id, owner, balance)`:
-  
+
   Which of the following SQL statements correctly withdraws `50` from Bob's account (`id = 1`) **only if** Bob has a balance of at least `50`?
 choices:
   - body: |

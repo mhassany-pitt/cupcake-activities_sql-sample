@@ -47,17 +47,14 @@ elements:
   - type: block
     group: sql-queries
     location:
-      snippet: |-
-        UPDATE accounts SET balance = balance + 100 WHERE id = 1;
+      snippet: UPDATE accounts SET balance = balance + 100 WHERE id = 1;
     choices:
-      - snippet: |-
-          UPDATE accounts SET balance = balance + 100 WHERE id = 1;
+      - snippet: UPDATE accounts SET balance = balance + 100 WHERE id = 1;
         role: solution
         explanations:
           - body: |
               Correct! Credits Bob's account (`id = 1`) by adding 100 to the current balance.
-      - snippet: |-
-          UPDATE accounts SET balance = balance + 100;
+      - snippet: UPDATE accounts SET balance = balance + 100;
         role: distractor
         explanations:
           - body: |
@@ -65,23 +62,19 @@ elements:
   - type: block
     group: sql-queries
     location:
-      snippet: |-
-        UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;
+      snippet: UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;
     choices:
-      - snippet: |-
-          UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;
+      - snippet: UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;
         role: solution
         explanations:
           - body: |
               Correct! Debits 50 only if Bob's account has sufficient funds (`balance >= 50`).
-      - snippet: |-
-          UPDATE accounts SET balance = balance - 50 WHERE id = 1;
+      - snippet: UPDATE accounts SET balance = balance - 50 WHERE id = 1;
         role: distractor
         explanations:
           - body: |
               Incorrect. Lacking the `AND balance >= 50` condition allows withdrawals even when funds are insufficient, causing negative balances.
-      - snippet: |-
-          UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance < 50;
+      - snippet: UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance < 50;
         role: distractor
         explanations:
           - body: |
@@ -89,17 +82,14 @@ elements:
   - type: block
     group: sql-queries
     location:
-      snippet: |-
-        SELECT id, owner, balance FROM accounts ORDER BY id ASC;
+      snippet: SELECT id, owner, balance FROM accounts ORDER BY id ASC;
     choices:
-      - snippet: |-
-          SELECT id, owner, balance FROM accounts ORDER BY id ASC;
+      - snippet: SELECT id, owner, balance FROM accounts ORDER BY id ASC;
         role: solution
         explanations:
           - body: |
               Correct! Selects `id`, `owner`, and `balance` ordered deterministically by primary key `id ASC`.
-      - snippet: |-
-          SELECT id, owner, balance FROM accounts ORDER BY id DESC;
+      - snippet: SELECT id, owner, balance FROM accounts ORDER BY id DESC;
         role: distractor
         explanations:
           - body: |

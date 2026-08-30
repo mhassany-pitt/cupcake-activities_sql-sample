@@ -44,109 +44,109 @@ executions:
       id[int;pk],owner[text],balance[numeric]
       1,Bob,250
       2,Alice,500
-    stderr: ""
+    stderr: ''
     status: pass
 elements:
   - type: blank
     location:
-      context: "UPDATE accounts SET balance = balance + 100 WHERE id = 1;"
-      snippet: "UPDATE"
+      context: UPDATE accounts SET balance = balance + 100 WHERE id = 1;
+      snippet: UPDATE
       nth: 1
     choices:
-      - snippet: "UPDATE"
+      - snippet: UPDATE
         role: solution
         explanations:
           - body: |
               Correct! In SQL, the `UPDATE` statement is used to modify existing row values in a relational table.
-      - snippet: "INSERT"
+      - snippet: INSERT
         role: distractor
         explanations:
           - body: |
               Incorrect. `INSERT` is used to add new rows to a table, not to update existing balances.
-      - snippet: "ALTER"
+      - snippet: ALTER
         role: distractor
         explanations:
           - body: |
               Incorrect. `ALTER` is a DDL command used to modify table schemas (e.g. adding columns), not row values.
-      - snippet: "SELECT"
+      - snippet: SELECT
         role: distractor
         explanations:
           - body: |
               Incorrect. `SELECT` is used to query data, not to mutate column values.
   - type: blank
     location:
-      context: "UPDATE accounts SET balance = balance + 100 WHERE id = 1;"
-      snippet: "+"
+      context: UPDATE accounts SET balance = balance + 100 WHERE id = 1;
+      snippet: +
       nth: 1
     choices:
-      - snippet: "+"
+      - snippet: +
         role: solution
         explanations:
           - body: |
               Correct! The `+` operator increases the current balance by the deposit amount.
-      - snippet: "-"
+      - snippet: '-'
         role: distractor
         explanations:
           - body: |
               Incorrect. The `-` operator would subtract funds from the account instead of depositing them.
-      - snippet: "*"
+      - snippet: '*'
         role: distractor
         explanations:
           - body: |
               Incorrect. The `*` operator would multiply the current balance by 100 instead of adding funds.
-      - snippet: "/"
+      - snippet: /
         role: distractor
         explanations:
           - body: |
               Incorrect. The `/` operator would divide the balance instead of crediting it.
   - type: blank
     location:
-      context: "UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;"
-      snippet: ">="
+      context: UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;
+      snippet: '>='
       nth: 1
     choices:
-      - snippet: ">="
+      - snippet: '>='
         role: solution
         explanations:
           - body: |
               Correct! The greater-than-or-equal operator (`>=`) ensures the withdrawal only occurs if the account has at least 50 in funds.
-      - snippet: "<="
+      - snippet: <=
         role: distractor
         explanations:
           - body: |
               Incorrect. Using `<=` would permit withdrawals only when the balance is 50 or less, risking an overdraft if balance is under 50.
-      - snippet: "="
+      - snippet: '='
         role: distractor
         explanations:
           - body: |
               Incorrect. Using `=` would only allow withdrawals if the balance is exactly equal to 50, rejecting withdrawals when balance is greater than 50.
-      - snippet: "<"
+      - snippet: <
         role: distractor
         explanations:
           - body: |
               Incorrect. Using `<` would permit withdrawals only when funds are strictly less than 50, guaranteeing an overdraft into negative balance!
   - type: blank
     location:
-      context: "SELECT id, owner, balance FROM accounts ORDER BY id ASC;"
-      snippet: "SELECT"
+      context: SELECT id, owner, balance FROM accounts ORDER BY id ASC;
+      snippet: SELECT
       nth: 1
     choices:
-      - snippet: "SELECT"
+      - snippet: SELECT
         role: solution
         explanations:
           - body: |
               Correct! The `SELECT` command queries and returns the specified column values from the `accounts` table.
-      - snippet: "FETCH"
+      - snippet: FETCH
         role: distractor
         explanations:
           - body: |
               Incorrect. In standard SQL queries, queries start with `SELECT`, not `FETCH`.
-      - snippet: "GET"
+      - snippet: GET
         role: distractor
         explanations:
           - body: |
               Incorrect. `GET` is not a standard SQL DML keyword for querying table rows.
-      - snippet: "SHOW"
+      - snippet: SHOW
         role: distractor
         explanations:
           - body: |

@@ -46,7 +46,7 @@ executions:
 elements:
   - type: explanation
     location:
-      snippet: "UPDATE accounts SET balance = balance + 100 WHERE id = 1;"
+      snippet: UPDATE accounts SET balance = balance + 100 WHERE id = 1;
     explanations:
       - body: |
           ### 1. The Deposit `UPDATE` Query
@@ -55,7 +55,7 @@ elements:
           * `WHERE id = 1`: Essential row filter ensuring only Bob's account (primary key `id = 1`) is updated. Omitting `WHERE` would update every row in the table!
   - type: explanation
     location:
-      snippet: "UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;"
+      snippet: UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;
     explanations:
       - body: |
           ### 2. Safe Withdrawal with Compound Predicates
@@ -65,7 +65,7 @@ elements:
             2. `balance >= 50`: Guarantees sufficient funds exist before executing the debit. If `balance < 50`, zero rows match the `WHERE` predicate, leaving the account balance unmodified and preventing overdrafts.
   - type: explanation
     location:
-      snippet: "SELECT id, owner, balance FROM accounts ORDER BY id ASC;"
+      snippet: SELECT id, owner, balance FROM accounts ORDER BY id ASC;
     explanations:
       - body: |
           ### 3. Querying Results
