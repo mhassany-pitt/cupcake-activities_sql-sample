@@ -22,11 +22,6 @@ pedagogy:
     - updates
     - filtering
     - integrity
-source: main.sql
-includes:
-  - seed.sql
-runtime:
-  language: sql
 include_choices: 4
 question: |
   Given the relational table `accounts(id, owner, balance)`:

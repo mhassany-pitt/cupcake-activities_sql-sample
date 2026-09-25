@@ -26,6 +26,7 @@ pedagogy:
     - queries
 runtime:
   language: sql
+  version: 2016
 statement: |
   Complete the `accounts` SQL transaction queries by selecting the correct keywords, arithmetic operators, and relational predicates.
   Make sure to:
@@ -33,8 +34,9 @@ statement: |
   2. Increase the balance during a deposit transaction.
   3. Ensure that withdrawal amounts do not exceed the available balance.
   4. Query the final table results using `SELECT`.
-executions:
+testcases:
   - title: Bob's Account
+    visible: true
     stdin: []
     stdout: |-
       id[int;pk],owner[text],balance[numeric]
@@ -44,8 +46,17 @@ executions:
       id[int;pk],owner[text],balance[numeric]
       1,Bob,250
       2,Alice,500
-    stderr: ''
     status: pass
+    hints:
+      - "Review the blanks and ensure the operations match the expected transaction flow."
+      - "Pay attention to conditional checks and return or print statements."
+    feedback:
+      - on_pass:
+          - explanations:
+              - "Great job! All blanks were completed correctly and produced the expected output."
+        on_fail:
+          - explanations:
+              - "One or more blanks are incorrect. Check the expected output and verify your selections."
 elements:
   - type: blank
     location:

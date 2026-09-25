@@ -26,14 +26,17 @@ pedagogy:
     - queries
 runtime:
   language: sql
+  version: 2016
 statement: |
   Rearrange the queries to correctly implement the deposit, safe withdrawal, and final balance query for the `accounts` table.
   Make sure to:
   1. Deposit funds into Bob's account (`id = 1`).
   2. Safely withdraw funds by enforcing `balance >= 50` in the `WHERE` predicate.
   3. Query the final table rows sorted by `id ASC`.
-executions:
+testcases:
   - title: Standard Transaction
+    visible: true
+    stdin: []
     stdout: |-
       id[int;pk],owner[text],balance[numeric]
       1,Bob,250
@@ -43,6 +46,16 @@ executions:
       1,Bob,250
       2,Alice,500
     status: pass
+    hints:
+      - "Arrange the code blocks in logical sequential order from initialization to final output."
+      - "Ensure correct block indentation where applicable."
+    feedback:
+      - on_pass:
+          - explanations:
+              - "Correct! All blocks are sequenced properly to produce the expected output."
+        on_fail:
+          - explanations:
+              - "The block ordering or indentation is incorrect. Re-examine the flow of execution."
 elements:
   - type: block
     group: sql-queries
@@ -51,6 +64,7 @@ elements:
     choices:
       - snippet: UPDATE accounts SET balance = balance + 100 WHERE id = 1;
         role: solution
+        indent: 0
         explanations:
           - body: |
               Correct! Credits Bob's account (`id = 1`) by adding 100 to the current balance.
@@ -66,6 +80,7 @@ elements:
     choices:
       - snippet: UPDATE accounts SET balance = balance - 50 WHERE id = 1 AND balance >= 50;
         role: solution
+        indent: 0
         explanations:
           - body: |
               Correct! Debits 50 only if Bob's account has sufficient funds (`balance >= 50`).
@@ -81,6 +96,7 @@ elements:
     choices:
       - snippet: SELECT id, owner, balance FROM accounts ORDER BY id ASC;
         role: solution
+        indent: 0
         explanations:
           - body: |
               Correct! Selects `id`, `owner`, and `balance` ordered deterministically by primary key `id ASC`.

@@ -26,6 +26,7 @@ pedagogy:
     - queries
 runtime:
   language: sql
+  version: 2016
 statement: |
   This worked example demonstrates how `accounts` relational table state is managed using Standard SQL. We'll examine:
   1. Crediting funds using `UPDATE accounts SET balance = balance + ... WHERE id = ...`.
@@ -43,6 +44,10 @@ executions:
       1,Bob,250
       2,Alice,500
     status: pass
+    feedback:
+      - on_pass:
+          - explanations:
+              - "Demonstrates the step-by-step execution and final state of the bank account transactions."
 elements:
   - type: explanation
     location:
