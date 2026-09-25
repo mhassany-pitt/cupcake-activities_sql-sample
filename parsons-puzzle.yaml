@@ -33,6 +33,9 @@ statement: |
   1. Deposit funds into Bob's account (`id = 1`).
   2. Safely withdraw funds by enforcing `balance >= 50` in the `WHERE` predicate.
   3. Query the final table rows sorted by `id ASC`.
+hints:
+  - "Arrange the code blocks in logical sequential order from initialization to final output."
+  - "Ensure correct block indentation where applicable."
 testcases:
   - title: Standard Transaction
     visible: true
@@ -46,16 +49,11 @@ testcases:
       1,Bob,250
       2,Alice,500
     status: pass
-    hints:
-      - "Arrange the code blocks in logical sequential order from initialization to final output."
-      - "Ensure correct block indentation where applicable."
     feedback:
-      - on_pass:
-          - explanations:
-              - "Correct! All blocks are sequenced properly to produce the expected output."
-        on_fail:
-          - explanations:
-              - "The block ordering or indentation is incorrect. Re-examine the flow of execution."
+      on_pass:
+        - "Correct! All blocks are sequenced properly to produce the expected output."
+      on_fail:
+        - "The block ordering or indentation is incorrect. Re-examine the flow of execution."
 elements:
   - type: block
     group: sql-queries

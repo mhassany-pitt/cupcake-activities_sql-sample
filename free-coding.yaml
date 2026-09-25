@@ -32,6 +32,9 @@ statement: |
   1. Deposit `100` into Bob's account (`id = 1`).
   2. Withdraw `50` from Bob's account (`id = 1`) only if his balance is at least `50` (`balance >= 50`).
   3. Query all columns `id`, `owner`, and `balance` from `accounts` ordered by `id ASC`.
+hints:
+  - "Review the problem statement and ensure the steps are executed in order."
+  - "Verify that initial values, deposits, withdrawals, and prints match the specification."
 elements:
   - type: editable
     location:
@@ -60,13 +63,8 @@ testcases:
       1,Bob,250
       2,Alice,500
     status: pass
-    hints:
-      - "Review the problem statement and ensure the steps are executed in order."
-      - "Verify that initial values, deposits, withdrawals, and prints match the specification."
     feedback:
-      - on_pass:
-          - explanations:
-              - "Great job! Your solution executed properly and matched all expected outputs."
-        on_fail:
-          - explanations:
-              - "Your code produced differing output. Double-check your method calls and printed formatting."
+      on_pass:
+        - "Great job! Your solution executed properly and matched all expected outputs."
+      on_fail:
+        - "Your code produced differing output. Double-check your method calls and printed formatting."

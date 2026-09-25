@@ -31,6 +31,9 @@ runtime:
 statement: |
   Determine the exact tabular **output** of the SQL execution.
   The script initializes the `accounts` table with a starting balance and executes a sequence of `UPDATE` and `SELECT` statements.
+hints:
+  - "Trace the parameter values step-by-step through each statement."
+  - "Check if the withdrawal amount exceeds the balance to determine which branch executes."
 testcases:
   - title: Standard Trace Execution
     visible: true
@@ -44,16 +47,11 @@ testcases:
       1,Bob,250
       2,Alice,500
     status: pass
-    hints:
-      - "Trace the parameter values step-by-step through each statement."
-      - "Check if the withdrawal amount exceeds the balance to determine which branch executes."
     feedback:
-      - on_pass:
-          - explanations:
-              - "Correct trace! You tracked the state transitions and outputs accurately."
-        on_fail:
-          - explanations:
-              - "Your trace output did not match. Trace each parameter update carefully."
+      on_pass:
+        - "Correct trace! You tracked the state transitions and outputs accurately."
+      on_fail:
+        - "Your trace output did not match. Trace each parameter update carefully."
 elements:
   - type: parameter
     location:
