@@ -62,7 +62,6 @@ testcases:
       id[int;pk],owner[text],balance[numeric]
       1,Bob,250
       2,Alice,500
-    status: pass
     feedback:
       on_pass:
         - "Great job! Your solution executed properly and matched all expected outputs."
